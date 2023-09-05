@@ -21,5 +21,14 @@ class Graph:
                     self.__graph[data[0]] = []
                 self.__graph[data[0]].append([data[1], data[2]])
 
+    # Operator overloading
+    def __str__(self):  # UI design for his sector
+        res = ""
+        for key in self.__graph.keys():
+            for val in self.__graph[key]:
+                res += f"{key} {val[0]} {val[1]}\n"
+        return res
+
 
 a = Graph("test.txt")
+print(a)
