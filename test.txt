@@ -1,3 +1,5 @@
-10 15 2
-24 56 6
-10 17 3
+Tehran Shiraz 100
+Shiraz Esfahan 142
+Tehran Shomal 117
+Arak Tabriz 225 
+Tehran Arak 324
