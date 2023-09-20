@@ -58,6 +58,26 @@ class Graph:
                     des = temp_dict[des][0]
             return res[::-1]
 
+    def dfs(self, org=None):  # dfs will not find the shortest path, so doesn't need "des" parameter
+        res = []
+        if org is None:
+            start_node, res = self.__nodes[0], [self.__nodes[0]]
+        else:
+            if org in self.__nodes:
+                start_node, res = org, [org]
+            else:
+                raise Exception("Origin was NOT found")
+
+        def __rec_dfs(current_node):  # use recursive function for DFS trace
+            for subnode in self.__graph[current_node]:
+                if subnode[0] not in res:
+                    res.append(subnode[0])
+                    __rec_dfs(subnode[0])
+            return
+
+        __rec_dfs(start_node)
+        return res
+
     # Private functions
     def __create_graph(self):
         with open(self.__filename, 'r') as file:
@@ -98,5 +118,6 @@ class Graph:
 
 
 a = Graph("test.txt")
+print(a.dfs())
 print(a.bfs())
 a.show()

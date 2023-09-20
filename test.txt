@@ -1,7 +1,7 @@
 Tehran Shiraz 100
 Shiraz Esfahan 142
 Tehran Shomal 117
-Arak Tabriz 225 
+Arak Tabriz 225
 Tehran Arak 324
 Shomal Tehran 117
 Esfahan Shiraz 142
