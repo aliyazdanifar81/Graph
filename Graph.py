@@ -18,7 +18,6 @@ class Graph:
 
     # User function
     def bfs(self, org=None, des=None):
-        res, counter = [], 0
         if org is None:
             my_queue = [self.__nodes[0]]
         else:
@@ -26,11 +25,16 @@ class Graph:
                 my_queue = [org]
             else:
                 raise Exception("Origin was NOT found")
+        res, counter, visited_nodes = [], 0, dict()
+        for i in self.__nodes:
+            visited_nodes[i] = False
+        visited_nodes[my_queue[0]] = True
         if des is None:
             for key in my_queue:
                 for val in self.__graph[key]:
-                    if val[0] not in my_queue:
+                    if not visited_nodes[val[0]]:
                         my_queue.append(val[0])
+                        visited_nodes[val[0]] = True
                 res.append(my_queue[counter])
                 counter += 1
             return res
@@ -41,8 +45,9 @@ class Graph:
             # temp_dict (format) = [nearest connected node, distance from origin]
             for key in my_queue:
                 for val in self.__graph[key]:
-                    if val[0] not in my_queue:
+                    if not visited_nodes[val[0]]:
                         my_queue.append(val[0])
+                        visited_nodes[val[0]] = True
                         temp_dict[val[0]] = [key, temp_dict[key][1] + 1]
                     if val[0] == des:
                         flag, res = 1, [val[0]]
