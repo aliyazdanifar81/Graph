@@ -83,6 +83,45 @@ class Graph:
         __rec_dfs(start_node)
         return res
 
+    def dijkstra(self, org=None, des=None):
+        check_des = False
+        if org is None:
+            curr_node = [self.__nodes[0], 0]
+        else:
+            if org in self.__nodes:
+                curr_node = [org, 0]
+                check_des = True
+            else:
+                raise Exception("Origin was NOT found")
+        temp_dict, counter, visited_nodes = dict(), 0, dict()
+        for node in self.__nodes:
+            temp_dict[node] = [float('inf'), None]  # [cost, parent]
+        temp_dict[curr_node[0]] = [0, None]
+        for i in self.__nodes:
+            visited_nodes[i] = False
+        visited_nodes[curr_node[0]] = True
+        while curr_node[0] is not None:
+            for _list in self.__graph[curr_node[0]]:
+                if curr_node[1] + float(_list[1]) < temp_dict[_list[0]][0]:
+                    temp_dict[_list[0]] = [curr_node[1] + float(_list[1]), curr_node[0]]
+            visited_nodes[curr_node[0]] = True
+            min_node = [None, float('inf')]
+            for node in self.__nodes:
+                if temp_dict[node][0] < min_node[1] and not visited_nodes[node]:
+                    min_node = [node, temp_dict[node][0]]
+            curr_node = min_node
+        if check_des:
+            if des is not None:
+                if des not in self.__nodes:
+                    raise Exception("Destination was NOT found")
+                res, temp_des = [des], des
+                while temp_dict[des][1] is not None:
+                    res.append(temp_dict[des][1])
+                    des = temp_dict[des][1]
+                res = res[::-1]
+                return [res, temp_dict[temp_des][0]]
+        return temp_dict
+
     # Private functions
     def __create_graph(self):
         with open(self.__filename, 'r') as file:
@@ -123,6 +162,5 @@ class Graph:
 
 
 a = Graph("test.txt")
-print(a.dfs())
-print(a.bfs())
+print(a.dijkstra('0', '6'))
 a.show()
